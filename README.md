@@ -43,4 +43,4 @@ Phương pháp này chuyển đổi bảng và quy tắc chơi thành bài toán
 3. Mở trình duyệt web của bạn và truy cập vào đường dẫn:
    ```
    http://localhost:3000
-   ``
+   ```
