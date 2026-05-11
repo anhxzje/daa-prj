@@ -1,0 +1,64 @@
+@import "tailwindcss";
+
+:root {
+  --theme-bg-base: var(--color-slate-50);
+  --theme-bg-panel: var(--color-white);
+  --theme-bg-panel-solid: var(--color-white);
+  --theme-bg-header: rgba(255, 255, 255, 0.8);
+  --theme-border-panel: var(--color-slate-200);
+  --theme-border-input: var(--color-slate-300);
+  --theme-text-main: var(--color-slate-800);
+  --theme-text-muted: var(--color-slate-500);
+  --theme-text-bold: var(--color-slate-900);
+  --theme-cell-empty: rgba(241, 245, 249, 0.4);
+  --theme-cell-filled: var(--color-white);
+  --theme-cell-border-empty: var(--color-slate-200);
+  --theme-cell-border-filled: var(--color-blue-400);
+  --theme-cell-text: var(--color-slate-900);
+}
+
+:root[class~="dark"] {
+  --theme-bg-base: var(--color-slate-950);
+  --theme-bg-panel: rgba(15, 23, 42, 0.8);
+  --theme-bg-panel-solid: var(--color-slate-900);
+  --theme-bg-header: rgba(15, 23, 42, 0.5);
+  --theme-border-panel: var(--color-slate-800);
+  --theme-border-input: var(--color-slate-700);
+  --theme-text-main: var(--color-slate-200);
+  --theme-text-muted: var(--color-slate-400);
+  --theme-text-bold: var(--color-white);
+  --theme-cell-empty: rgba(15, 23, 42, 0.4);
+  --theme-cell-filled: rgba(30, 41, 59, 0.8);
+  --theme-cell-border-empty: rgba(30, 41, 59, 0.6);
+  --theme-cell-border-filled: var(--color-slate-600);
+  --theme-cell-text: var(--color-white);
+}
+
+@theme {
+  --color-th-base: var(--theme-bg-base);
+  --color-th-panel: var(--theme-bg-panel);
+  --color-th-panel-solid: var(--theme-bg-panel-solid);
+  --color-th-header: var(--theme-bg-header);
+  --color-th-border: var(--theme-border-panel);
+  --color-th-input: var(--theme-border-input);
+  --color-th-text: var(--theme-text-main);
+  --color-th-muted: var(--theme-text-muted);
+  --color-th-bold: var(--theme-text-bold);
+  --color-th-cell-empty: var(--theme-cell-empty);
+  --color-th-cell-filled: var(--theme-cell-filled);
+  --color-th-cell-b-e: var(--theme-cell-border-empty);
+  --color-th-cell-b-f: var(--theme-cell-border-filled);
+  --color-th-cell-text: var(--theme-cell-text);
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 4px;
+}
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: var(--theme-border-panel);
+  border-radius: 20px;
+}
+
