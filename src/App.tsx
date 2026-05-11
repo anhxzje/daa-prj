@@ -239,70 +239,98 @@ export default function App() {
         </aside>
 
         {/* Center: Puzzle Grid */}
-        <section className="col-span-1 md:col-span-6 flex flex-col items-center justify-center bg-th-panel rounded-xl border border-th-border p-4 md:p-8 shadow-inner min-h-[500px] md:min-h-[600px] overflow-hidden relative">
+        <section className="col-span-1 md:col-span-6 flex flex-col items-center justify-start bg-th-panel rounded-xl border border-th-border p-4 md:p-8 shadow-inner min-h-[500px] md:min-h-[600px] overflow-y-auto overflow-x-hidden relative custom-scrollbar">
           
           {puzzle && (
-            <div className="relative w-full max-w-[800px] flex justify-center items-center p-6 md:p-12">
+            <div className="relative w-full max-w-[800px] flex justify-center items-start pt-4 md:pt-6 pb-12 md:pb-16">
               {/* Glow background behind grid */}
-              <div className="absolute inset-0 bg-blue-500/10 rounded-[60px] blur-3xl pointer-events-none -z-10"></div>
+              <div className="absolute inset-0 bg-blue-500/5 rounded-[60px] blur-3xl pointer-events-none -z-10"></div>
               
-              <div 
-                className="grid w-full aspect-square relative bg-th-panel rounded-3xl p-4 md:p-8 border border-th-border shadow-2xl"
-                style={{ 
-                  gridTemplateColumns: `minmax(20px, 10%) repeat(${puzzle.size}, minmax(0, 1fr)) minmax(20px, 10%)`,
-                  gridTemplateRows: `minmax(20px, 10%) repeat(${puzzle.size}, minmax(0, 1fr)) minmax(20px, 10%)`,
-                  gap: '6px'
-                }}
-              >
-                {/* Top Row: empty corner, top clues, empty corner */}
-                <div></div>
-                {puzzle.clues.top.map((c, i) => (
-                  <div key={`t-${i}`} className={cn("flex items-end justify-center pb-1 md:pb-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg lg:text-xl" : puzzle.size >= 6 ? "text-base md:text-xl lg:text-3xl" : "text-lg md:text-2xl lg:text-4xl")}>
-                    {c > 0 ? c : ''}
-                  </div>
-                ))}
-                <div></div>
-
-                {/* Middle Rows: left clue, cells, right clue */}
-                {puzzle.grid.map((row, r) => (
-                  <Fragment key={`row-${r}`}>
-                    {/* Left clue */}
-                    <div className={cn("flex items-center justify-end pr-1 md:pr-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg lg:text-xl" : puzzle.size >= 6 ? "text-base md:text-xl lg:text-3xl" : "text-lg md:text-2xl lg:text-4xl")}>
-                      {puzzle.clues.left[r] > 0 ? puzzle.clues.left[r] : ''}
-                    </div>
-
-                    {/* Cells */}
-                    {row.map((val, c) => (
-                      <div 
-                        key={`${r}-${c}`}
-                        className={cn(
-                          "rounded-md md:rounded-lg flex items-center justify-center font-bold transition-all duration-300",
-                          puzzle.size >= 8 ? "text-lg md:text-xl lg:text-3xl" : puzzle.size >= 6 ? "text-xl md:text-3xl lg:text-4xl" : "text-2xl md:text-4xl lg:text-5xl",
-                          val !== 0 
-                            ? "bg-th-cell-filled border-th-cell-b-f text-th-cell-text shadow-sm border-[1.5px]" 
-                            : "bg-th-cell-empty border-th-cell-b-e border box-border shadow-inner text-transparent"
-                        )}
-                      >
-                        {val !== 0 ? val : ''}
+              <div className="relative w-full max-w-[450px] md:max-w-[500px] flex flex-col pt-[30px] pb-[2px] pl-[25px] pr-[7px] md:pt-[38px] md:pb-[10px] md:pl-[33px] md:pr-[15px] bg-th-panel rounded-3xl border border-th-border shadow-2xl">
+                {/* Top Clues */}
+                <div className="flex w-full">
+                  <div className="w-8 md:w-12 shrink-0"></div>
+                  <div 
+                    className="flex-1 grid gap-1 md:gap-1.5"
+                    style={{ gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))` }}
+                  >
+                    {puzzle.clues.top.map((c, i) => (
+                      <div key={`t-${i}`} className={cn("flex items-end justify-center pb-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg" : "text-lg md:text-2xl")}>
+                        {c > 0 ? c : ''}
                       </div>
                     ))}
-
-                    {/* Right clue */}
-                    <div className={cn("flex items-center justify-start pl-1 md:pl-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg lg:text-xl" : puzzle.size >= 6 ? "text-base md:text-xl lg:text-3xl" : "text-lg md:text-2xl lg:text-4xl")}>
-                      {puzzle.clues.right[r] > 0 ? puzzle.clues.right[r] : ''}
-                    </div>
-                  </Fragment>
-                ))}
-
-                {/* Bottom Row: empty corner, bottom clues, empty corner */}
-                <div></div>
-                {puzzle.clues.bottom.map((c, i) => (
-                  <div key={`b-${i}`} className={cn("flex items-start justify-center pt-1 md:pt-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg lg:text-xl" : puzzle.size >= 6 ? "text-base md:text-xl lg:text-3xl" : "text-lg md:text-2xl lg:text-4xl")}>
-                    {c > 0 ? c : ''}
                   </div>
-                ))}
-                <div></div>
+                  <div className="w-8 md:w-12 shrink-0"></div>
+                </div>
 
+                {/* Middle: Left clues, Board, Right clues */}
+                <div className="flex w-full">
+                  {/* Left Clues */}
+                  <div 
+                    className="grid gap-1 md:gap-1.5 w-8 md:w-12 shrink-0"
+                    style={{ gridTemplateRows: `repeat(${puzzle.size}, minmax(0, 1fr))` }}
+                  >
+                    {puzzle.clues.left.map((c, i) => (
+                      <div key={`l-${i}`} className={cn("flex items-center justify-end pr-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg" : "text-lg md:text-2xl")}>
+                        {c > 0 ? c : ''}
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Board */}
+                  <div 
+                    className="flex-1 aspect-square grid gap-1 md:gap-1.5 bg-th-panel border-2 border-th-border p-1.5 md:p-2 rounded-xl shadow-inner"
+                    style={{
+                      gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))`,
+                      gridTemplateRows: `repeat(${puzzle.size}, minmax(0, 1fr))`
+                    }}
+                  >
+                    {puzzle.grid.map((row, r) => (
+                      row.map((val, c) => (
+                        <div 
+                          key={`${r}-${c}`}
+                          className={cn(
+                            "rounded-md flex items-center justify-center font-bold transition-all duration-300",
+                            puzzle.size >= 8 ? "text-lg md:text-2xl" : puzzle.size >= 6 ? "text-xl md:text-3xl" : "text-2xl md:text-4xl",
+                            val !== 0 
+                              ? "bg-th-cell-filled border-th-cell-b-f text-th-cell-text shadow-sm border-[1.5px]" 
+                              : "bg-th-base border-th-border/40 border box-border text-transparent"
+                          )}
+                        >
+                          {val !== 0 ? val : ''}
+                        </div>
+                      ))
+                    ))}
+                  </div>
+
+                  {/* Right Clues */}
+                  <div 
+                    className="grid gap-1 md:gap-1.5 w-8 md:w-12 shrink-0"
+                    style={{ gridTemplateRows: `repeat(${puzzle.size}, minmax(0, 1fr))` }}
+                  >
+                    {puzzle.clues.right.map((c, i) => (
+                      <div key={`r-${i}`} className={cn("flex items-center justify-start pl-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg" : "text-lg md:text-2xl")}>
+                        {c > 0 ? c : ''}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                {/* Bottom Clues */}
+                <div className="flex w-full">
+                  <div className="w-8 md:w-12 shrink-0"></div>
+                  <div 
+                    className="flex-1 grid gap-1 md:gap-1.5"
+                    style={{ gridTemplateColumns: `repeat(${puzzle.size}, minmax(0, 1fr))` }}
+                  >
+                    {puzzle.clues.bottom.map((c, i) => (
+                      <div key={`b-${i}`} className={cn("flex items-start justify-center pt-2 font-bold text-blue-500", puzzle.size >= 8 ? "text-sm md:text-lg" : "text-lg md:text-2xl")}>
+                        {c > 0 ? c : ''}
+                      </div>
+                    ))}
+                  </div>
+                  <div className="w-8 md:w-12 shrink-0"></div>
+                </div>
               </div>
             </div>
           )}
